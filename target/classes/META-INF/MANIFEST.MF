@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: SpringBootCRMWithLogin
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: MSUSERSL123
+Implementation-Vendor-Id: com.sachin
+Build-Jdk: 1.8.0_361
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/SpringBootCRMWithLogin
+Created-By: Maven Integration for Eclipse
+Main-Class: com.sachin.springdemo.SpringBootCRMWithLoginApp
+
