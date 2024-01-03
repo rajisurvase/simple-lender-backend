@@ -26,6 +26,7 @@ import com.sachin.springdemo.service.BorrowerService;
 @RequestMapping("/api")
 public class BorrowerRestController {
 
+
 	@Autowired
 	private BorrowerService borrowerService;
 	
