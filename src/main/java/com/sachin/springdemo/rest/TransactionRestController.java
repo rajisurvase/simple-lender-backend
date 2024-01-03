@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sachin.springdemo.entity.Transaction;
+import com.sachin.springdemo.payload.response.TransactionListWithCount;
 import com.sachin.springdemo.service.RecordService;
 import com.sachin.springdemo.service.TransactionService;
 
@@ -33,14 +34,14 @@ public class TransactionRestController {
 	private RecordService recordService;
 	
 	@GetMapping("/records/{recordId}/allTransactions")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public List<Transaction> getTransactions(@PathVariable("recordId") int theRecordId) {
 		return transactionService.getTransactions(theRecordId);
 	}
 	
 	@GetMapping("/records/{recordId}/transactions")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
-    public List<Transaction> getAllTransactionsByPageRequest(
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
+    public TransactionListWithCount getAllTransactionsByPageRequest(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
@@ -49,11 +50,12 @@ public class TransactionRestController {
 		
 		PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
 		
-        return transactionService.findAll(pageRequest);
+//        return transactionService.findAll(pageRequest);
+		return transactionService.findAllWithTransactionCount(pageRequest);
     }
 	
 	@GetMapping("/records/{recordId}/transactions/{id}")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Transaction getTransactionById(@PathVariable("recordId") int theRecordId, 
 			@PathVariable("id") int theId) {
 		
@@ -61,7 +63,7 @@ public class TransactionRestController {
 	}
 	
 	@PostMapping("/records/{recordId}/transactions")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Transaction saveTransaction(@PathVariable("recordId") int theRecordId, 
 			@RequestBody Transaction theTransaction) {
 		
@@ -74,7 +76,7 @@ public class TransactionRestController {
 	}
 	
 	@PutMapping("/records/{recordId}/transactions")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Transaction updateTransaction(@PathVariable("recordId") int theRecordId,
 			@RequestBody Transaction theTransaction) {
 		
@@ -85,7 +87,7 @@ public class TransactionRestController {
 	}
 	
 	@DeleteMapping("/records/{recordId}/transactions/{id}")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public String deleteTransaction(@PathVariable("recordId") int theRecordId,
 			@PathVariable("id") int theId) {
 		

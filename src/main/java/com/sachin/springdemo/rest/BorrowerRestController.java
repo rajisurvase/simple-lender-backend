@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sachin.springdemo.entity.Borrower;
+import com.sachin.springdemo.payload.response.BorrowerListWithCount;
 import com.sachin.springdemo.service.BorrowerService;
 
 @EnableGlobalMethodSecurity
@@ -29,14 +30,14 @@ public class BorrowerRestController {
 	private BorrowerService borrowerService;
 	
 	@GetMapping("/allBorrowers")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public List<Borrower> getBorrowers() {
 		return borrowerService.getBorrowers();
 	}
 	
 	@GetMapping("/borrowers")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
-    public List<Borrower> getAllBorrowersByPageRequest(
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
+    public BorrowerListWithCount getAllBorrowersByPageRequest(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(name = "sortBy", defaultValue = "name") String sortBy,
@@ -45,18 +46,18 @@ public class BorrowerRestController {
 		
 		PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
 		
-        return borrowerService.findAll(pageRequest);
+        return borrowerService.findAllWithPageCount(pageRequest);
     }
 	
 	@GetMapping("/borrowers/{id}")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Borrower getBorrowerById(@PathVariable("id") int theId) {
 		
 		return borrowerService.getBorrower(theId);
 	}
 	
 	@PostMapping("/borrowers")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Borrower saveBorrower(@RequestBody Borrower theBorrower) {
 		
 		theBorrower.setId(0);
@@ -67,7 +68,7 @@ public class BorrowerRestController {
 	}
 	
 	@PutMapping("/borrowers")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Borrower updateBorrower(@RequestBody Borrower theBorrower) {
 		
 		borrowerService.saveBorrower(theBorrower);
@@ -76,7 +77,7 @@ public class BorrowerRestController {
 	}
 	
 	@DeleteMapping("/borrowers/{id}")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public String deleteBorrower(@PathVariable("id") int theId) {
 		
 		borrowerService.deleteBorrower(theId);

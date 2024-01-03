@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sachin.springdemo.entity.Record;
+import com.sachin.springdemo.payload.response.RecordListWithCount;
 import com.sachin.springdemo.service.BorrowerService;
 import com.sachin.springdemo.service.RecordService;
 
@@ -33,14 +34,14 @@ public class RecordRestController {
 	private BorrowerService borrowerService;
 	
 	@GetMapping("/borrowers/{borrowerId}/allRecords")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public List<Record> getRecords(@PathVariable("borrowerId") int theBorrowerId) {
 		return recordService.getRecords(theBorrowerId);
 	}
 	
 	@GetMapping("/borrowers/{borrowerId}/records")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
-    public List<Record> getAllRecordsByPageRequest(
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
+    public RecordListWithCount getAllRecordsByPageRequest(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
@@ -49,11 +50,12 @@ public class RecordRestController {
 		
 		PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortOrder), sortBy));
 		
-        return recordService.findAll(pageRequest);
+//        return recordService.findAll(pageRequest);
+		return recordService.findAllWithRecordCount(pageRequest);
     }
 	
 	@GetMapping("/borrowers/{borrowerId}/records/{id}")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Record getRecordById(@PathVariable("borrowerId") int theBorrowerId, 
 			@PathVariable("id") int theId) {
 		
@@ -61,11 +63,12 @@ public class RecordRestController {
 	}
 	
 	@PostMapping("/borrowers/{borrowerId}/records")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Record saveRecord(@PathVariable("borrowerId") int theBorrowerId, 
 			@RequestBody Record theRecord) {
 		
 		theRecord.setId(0);
+		System.out.println(borrowerService.getBorrower(theBorrowerId).toString() + "######################");
 		theRecord.setBorrower(borrowerService.getBorrower(theBorrowerId));
 		
 		recordService.saveRecord(theRecord);
@@ -74,7 +77,7 @@ public class RecordRestController {
 	}
 	
 	@PutMapping("/borrowers/{borrowerId}/records")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public Record updateRecord(@PathVariable("borrowerId") int theBorrowerId,
 			@RequestBody Record theRecord) {
 		
@@ -85,7 +88,7 @@ public class RecordRestController {
 	}
 	
 	@DeleteMapping("/borrowers/{borrowerId}/records/{id}")
-	@CrossOrigin(origins = "http://localhost:4200") // Allow requests from this origin
+	@CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
 	public String deleteRecord(@PathVariable("borrowerId") int theBorrowerId,
 			@PathVariable("id") int theId) {
 		

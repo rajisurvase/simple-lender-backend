@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.PageRequest;
 
 import com.sachin.springdemo.entity.Borrower;
+import com.sachin.springdemo.payload.response.BorrowerListWithCount;
 
 
 public interface BorrowerService {
@@ -18,4 +19,5 @@ public interface BorrowerService {
 	void deleteBorrower(int theId);
 
 	List<Borrower> findAll(PageRequest pageRequest);
+     BorrowerListWithCount findAllWithPageCount(PageRequest pageRequest);
 }

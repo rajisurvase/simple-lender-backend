@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Dec 17 22:14:38 IST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-018c-78aa-55c9-00000826bee0 
+on database directory memory:C:\my blog\simple-lender-backend\testdb with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
+Loaded from file:/C:/Users/ASUS/.m2/repository/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_391-b13
+user.dir=C:\my blog\simple-lender-backend
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

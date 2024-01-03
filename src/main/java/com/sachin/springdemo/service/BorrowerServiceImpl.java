@@ -6,11 +6,13 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sachin.springdemo.dao.BorrowerRepository;
 import com.sachin.springdemo.entity.Borrower;
+import com.sachin.springdemo.payload.response.BorrowerListWithCount;
 
 @Service
 public class BorrowerServiceImpl implements BorrowerService {
@@ -53,9 +55,27 @@ public class BorrowerServiceImpl implements BorrowerService {
 		
 		List<Borrower> theBorrowers = new ArrayList<>();
 		
-		borrowerRepository.findAll(pageRequest).forEach(theBorrowers :: add);
+		Page<Borrower> borrower = borrowerRepository.findAll(pageRequest);
+		long count= borrower.getTotalPages();
+		System.out.println(count+ "count++++++++++++++++++++++++");
+		borrower.forEach(theBorrowers :: add);
+//		borrowerRepository.findAll(pageRequest).forEach(theBorrowers :: add);
 		
 		return theBorrowers;
+	}
+	
+	@Override
+	@Transactional
+	public BorrowerListWithCount findAllWithPageCount(PageRequest pageRequest) {
+		
+		List<Borrower> theBorrowers = new ArrayList<>();
+		
+		Page<Borrower> borrower = borrowerRepository.findAll(pageRequest);
+		long pageCount= borrower.getTotalPages();
+		System.out.println(pageCount+ "count++++++++++++++++++++++++");
+		borrower.forEach(theBorrowers :: add);
+		BorrowerListWithCount b = new BorrowerListWithCount(pageCount, theBorrowers);
+		return b;
 	}
 
 }
